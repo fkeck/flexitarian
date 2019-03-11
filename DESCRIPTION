@@ -1,0 +1,15 @@
+Package: flexitarian
+Type: Package
+Title: Community data matrix to tidy data and vice versa
+Version: 0.1.0
+Author: Francois Keck
+Maintainer: Francois Keckr <francois.keck@gmail.com>
+Description: For ecologists (and other users) who want to combine tidyverse tools with their favorite packages that require classical community data matrix. And other convenient functions making my life easier.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports:
+    dplyr,
+    tibble,
+    tidyr
