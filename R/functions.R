@@ -84,28 +84,54 @@ tidy_cdm <- function(x, row.name = "SITE", key.name = "TAXON", value.name = "COU
 #'
 #' @export
 #'
-save_plots <- function(x, file, width = 8, height = 6,
-                       bookmarks = NULL, gs.exec = "gs", ...){
-  pdf(file, width = width, height = height, ...)
-  invisible(lapply(x, print))
-  dev.off()
-  if(!is.null(bookmarks)){
-    bk_file <- tempfile(fileext = ".info")
-    bookmarks <- iconv(bookmarks, to = "ASCII//TRANSLIT")
-    writeLines(
-      paste0(
-        "[/Page ", seq_along(bookmarks),
-        " /Title (", bookmarks, ") /OUT pdfmark",
-        collapse = "\n"),
-      bk_file)
-    bridge_file <- tempfile(fileext = ".pdf")
-    comm_gs <- paste0(gs.exec, " -sDEVICE=pdfwrite -q -dBATCH -dNOPAUSE ",
+save_plots <- function(.data, ...,
+                        files, width = 8, height = 6,
+                        bookmarks = NULL, gs.exec = "gs"){
+
+  .data <- dplyr::arrange(.data, !!!bookmarks)
+  plot_cols <- dplyr:::select.data.frame(.data, ...)
+  bk_dat <- dplyr::select(.data, !!!bookmarks)
+
+  #bk_dat <- arrange_all(bk_cols)
+  bk_dat <- as.matrix(bk_dat)
+
+  res <- flat_fac(bk_dat)
+
+  bk_file <- tempfile(fileext = ".info")
+  #bookmarks <- iconv(bookmarks, to = "ASCII//TRANSLIT")
+  writeLines(res, bk_file)
+
+  map2(plot_cols, files, function(plot_col, file){
+    pdf(file, width = width, height = height)
+    invisible(lapply(plot_col, print))
+    dev.off()
+    if(!is.null(bookmarks)){
+
+      bridge_file <- tempfile(fileext = ".pdf")
+      comm_gs <- paste0(gs.exec, " -sDEVICE=pdfwrite -q -dBATCH -dNOPAUSE ",
                         "-sOutputFile=", bridge_file,
                         " -dPDFSETTINGS=/prepress ", bk_file,
                         " -f ", file,
                         " && mv ", bridge_file, " ", file)
-    system(comm_gs)
-  }
+      system(comm_gs)
+    }
+  })
 }
 
 
+# library(tidyverse)
+# zz <- iris %>%
+#   as_tibble() %>%
+#   group_by(Species) %>%
+#   nest() %>%
+#   mutate(Group = c("Group 1", "Group 2", "Group 1")) %>%
+#   mutate(pl = map(data, ~ ggplot(.x) +
+#            geom_point(aes(Sepal.Length, Sepal.Width))
+#            ),
+#          pl2 = map(data, ~ ggplot(.x) +
+#                     geom_point(aes(Petal.Length, Petal.Width))
+#          ))
+#
+# save_plots(zz, pl, pl2, files = c("pl.pdf", "pl2.pdf"), bookmarks = vars(Group, Species))
+#
+# zz
