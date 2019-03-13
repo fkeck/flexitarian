@@ -3,6 +3,7 @@
 #' @importFrom tibble as_tibble deframe
 #' @importFrom dplyr mutate enquo ungroup select
 #' @importFrom tidyr gather
+#' @importFrom purrr map2
 #' @importFrom grDevices dev.off pdf
 #'
 #' @name subtools
