@@ -121,19 +121,9 @@ save_plots <- function(.data, ...,
 }
 
 
-# library(tidyverse)
-# zz <- iris %>%
-#   as_tibble() %>%
-#   group_by(Species) %>%
-#   nest() %>%
-#   mutate(Group = c("Group 1", "Group 2", "Group 1")) %>%
-#   mutate(pl = map(data, ~ ggplot(.x) +
-#            geom_point(aes(Sepal.Length, Sepal.Width))
-#            ),
-#          pl2 = map(data, ~ ggplot(.x) +
-#                     geom_point(aes(Petal.Length, Petal.Width))
-#          ))
-#
-# save_plots(zz, pl, pl2, files = c("pl.pdf", "pl2.pdf"), bookmarks = vars(Group, Species))
-#
-# zz
+tbl_to_df <- function(x, row.names){
+  row_names <- x[ , row.names, drop = TRUE]
+  res <- as.data.frame(x[ , -row.names])
+  rownames(res) <- row_names
+  res
+}
