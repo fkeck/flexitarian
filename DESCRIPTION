@@ -1,10 +1,10 @@
 Package: flexitarian
 Type: Package
-Title: Community data matrix to tidy data and vice versa
+Title: Community Data Matrix to Tidy Data and Vice Versa
 Version: 0.1.0
 Author: Francois Keck
 Maintainer: Francois Keck <francois.keck@gmail.com>
-Description: For ecologists (and others) who want to combine tidyverse with functions that require classical community data matrix.
+Description: For those who want to combine tidyverse with functions that require classical community data matrix.
 License: GPL-2
 Encoding: UTF-8
 LazyData: true

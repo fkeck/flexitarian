@@ -4,9 +4,8 @@
 #' @importFrom dplyr mutate enquo ungroup select
 #' @importFrom tidyr gather
 #' @importFrom purrr map2
-#' @importFrom grDevices dev.off pdf
 #'
-#' @name subtools
+#' @name flexitarian
 #' @docType package
 NULL
 

@@ -14,6 +14,9 @@ spread_cdm(x, row.names, col.names, counts, keep.order = FALSE)
 \item{col.names}{column name for column names (usually taxonomic names).}
 
 \item{counts}{column name of count data.}
+
+\item{keep.order}{keep the original order of rows and columns.
+If \code{FALSE} (default) rows and columns are reordered by alphabetical order.}
 }
 \value{
 a dataframe in wide format (typical sites x species community data matrix).

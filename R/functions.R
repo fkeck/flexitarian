@@ -5,6 +5,8 @@
 #' @param counts column name of count data.
 #' @param col.names column name for column names (usually taxonomic names).
 #' @param row.names column name for row names (usually site names).
+#' @param keep.order keep the original order of rows and columns.
+#' If \code{FALSE} (default) rows and columns are reordered by alphabetical order.
 #'
 #' @return a dataframe in wide format (typical sites x species community data matrix).
 #' @export
