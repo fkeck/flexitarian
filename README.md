@@ -34,3 +34,10 @@ all.equal(x, x_df)
 ```
 
 
+``` r
+x_tidy %>% 
+    spread_cdm(SITE, TAXON, COUNT) %>% 
+    vegan::diversity() %>% 
+    enframe("SITE", "SHANNON_IDX")
+```
+
