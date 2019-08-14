@@ -4,7 +4,7 @@
 \alias{spread_cdm}
 \title{Long format to community data matrix}
 \usage{
-spread_cdm(x, row.names, col.names, counts)
+spread_cdm(x, row.names, col.names, counts, keep.order = FALSE)
 }
 \arguments{
 \item{x}{a tibble.}
@@ -22,13 +22,15 @@ a dataframe in wide format (typical sites x species community data matrix).
 Long format to community data matrix
 }
 \examples{
-x <- matrix(rpois(100, 10), nrow = 10)
+x <- data.frame(matrix(rpois(100, 10), nrow = 10))
 rownames(x) <- paste("Site", 1:10)
 colnames(x) <- paste("Species", LETTERS[1:10])
 x
 x_tidy <- tidy_cdm(x)
 x_tidy
-y <- spread_cdm(x_tidy, SITE, TAXON, COUNT)
-y
+x_df <- spread_cdm(x_tidy, SITE, TAXON, COUNT)
+x_df
+x_df <- spread_cdm(x_tidy, SITE, TAXON, COUNT, keep.order = TRUE)
+all.equal(x, x_df)
 
 }
