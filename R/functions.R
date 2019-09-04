@@ -73,9 +73,21 @@ tidy_cdm <- function(x, row.name = "SITE", key.name = "TAXON", value.name = "COU
 
 
 
+#' Convert tibbles to dataframes
+#'
+#' @param x a tibble.
+#' @param row.name name of the column to use as row names in the returned dataframe.
+#'
+#' @return a dataframe
+#' @export
 tbl_to_df <- function(x, row.names){
-  row_names <- x[ , row.names, drop = TRUE]
-  res <- as.data.frame(x[ , -row.names])
+  quo_row.names <- dplyr::enquo(row.names)
+
+  x <- dplyr::ungroup(x)
+
+  row_names <- tibble::deframe(dplyr::select(x, !!quo_row.names))
+  res <- dplyr::select(x, -!!quo_row.names)
+  res <- as.data.frame(res)
   rownames(res) <- row_names
-  res
+  return(res)
 }
