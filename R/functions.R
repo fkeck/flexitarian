@@ -7,6 +7,9 @@
 #' @param row.names column name for row names (usually site names).
 #' @param keep.order keep the original order of rows and columns.
 #' If \code{FALSE} (default) rows and columns are reordered by alphabetical order.
+#' @param fill.missing By default, missing values will be replaced by NA.
+#' This is sometimes useful to replace with another value (typically zero).
+#' Note that all the NAs will be affected.
 #'
 #' @return a dataframe in wide format (typical sites x species community data matrix).
 #' @export
@@ -22,14 +25,14 @@
 #' x_df <- spread_cdm(x_tidy, SITE, TAXON, COUNT, keep.order = TRUE)
 #' all.equal(x, x_df)
 #'
-spread_cdm <- function(x, row.names, col.names, counts, keep.order = FALSE) {
+spread_cdm <- function(x, row.names, col.names, counts, keep.order = FALSE, fill.missing = NA) {
 
   quo_counts <- dplyr::enquo(counts)
   quo_col.names <- dplyr::enquo(col.names)
   quo_row.names <- dplyr::enquo(row.names)
   x <- dplyr::ungroup(x)
   res <- dplyr::select(x, !!quo_counts, !!quo_col.names, !!quo_row.names)
-  res <- tidyr::spread(res, key = !!quo_col.names, value = !!quo_counts)
+  res <- tidyr::spread(res, key = !!quo_col.names, value = !!quo_counts, fill = fill.missing)
   row_names <- tibble::deframe(dplyr::select(res, !!quo_row.names))
   res <- dplyr::select(res, -!!quo_row.names)
   res <- as.data.frame(res)
@@ -76,7 +79,7 @@ tidy_cdm <- function(x, row.name = "SITE", key.name = "TAXON", value.name = "COU
 #' Convert tibbles to dataframes
 #'
 #' @param x a tibble.
-#' @param row.name name of the column to use as row names in the returned dataframe.
+#' @param row.names name of the column to use as row names in the returned dataframe.
 #'
 #' @return a dataframe
 #' @export
