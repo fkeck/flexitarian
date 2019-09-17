@@ -4,7 +4,8 @@
 \alias{spread_cdm}
 \title{Long format to community data matrix}
 \usage{
-spread_cdm(x, row.names, col.names, counts, keep.order = FALSE)
+spread_cdm(x, row.names, col.names, counts, keep.order = FALSE,
+  fill.missing = NA)
 }
 \arguments{
 \item{x}{a tibble.}
@@ -17,6 +18,10 @@ spread_cdm(x, row.names, col.names, counts, keep.order = FALSE)
 
 \item{keep.order}{keep the original order of rows and columns.
 If \code{FALSE} (default) rows and columns are reordered by alphabetical order.}
+
+\item{fill.missing}{By default, missing values will be replaced by NA.
+This is sometimes useful to replace with another value (typically zero).
+Note that all the NAs will be affected.}
 }
 \value{
 a dataframe in wide format (typical sites x species community data matrix).
