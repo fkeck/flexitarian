@@ -94,3 +94,56 @@ tbl_to_df <- function(x, row.names){
   rownames(res) <- row_names
   return(res)
 }
+
+
+#' Remove empty (zero sum) rows and columns
+#'
+#' @param x a community matrix or dataframe.
+#' @param verbose If \code{TRUE} (default), print the names of the rows/columns removed.
+#'
+#' @return a community matrix or dataframe.
+#' @export
+#'
+remove_zerosum_rows <- function (x, verbose = TRUE) {
+  rs <- rowSums(x)
+  res <- x[rs != 0, , drop = FALSE]
+
+  if(verbose){
+    if(any(rs == 0)){
+      del <- x[rs == 0, , drop = FALSE]
+      if(is.null(rownames(del))) {
+        message("Number of deleted rows: ", nrow(del))
+      } else {
+        message("Deleted rows: ", paste(rownames(del), collapse = ", "))
+      }
+    } else {
+      message("No rows deleted.")
+    }
+  }
+
+  return(res)
+}
+
+
+#' @rdname remove_zerosum_rows
+#' @export
+remove_zerosum_cols <- function (x, verbose = TRUE) {
+  cs <- colSums(x)
+  res <- x[ , cs != 0, drop = FALSE]
+
+  if(verbose){
+    if(any(cs == 0)){
+      del <- x[ , cs == 0, drop = FALSE]
+      if(is.null(colnames(del))) {
+        message("Number of deleted columns: ", ncol(del))
+      } else {
+        message("Deleted columns: ", paste(colnames(del), collapse = ", "))
+      }
+    } else {
+      message("No column deleted.")
+    }
+  }
+
+  return(res)
+}
+
