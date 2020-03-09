@@ -3,6 +3,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+<img src="man/figures/logo_flexitarian.png" width="120" align="right" />
+
 For those who want to combine tidyverse with functions that require community data matrices stored in dataframes.
 
 ## Installation
