@@ -21,6 +21,13 @@ utils::globalVariables(c("n"))
 #'
 #' @return a tibble of rarefied community data in long format.
 #' @export
+#' @examples
+#' x <- data.frame(matrix(rpois(100, 10), nrow = 10))
+#' rownames(x) <- paste("Site", 1:10)
+#' colnames(x) <- paste("Species", LETTERS[1:10])
+#' x
+#' x_tidy <- tidy_cdm(x)
+#' rarefy_long(x_tidy, SITE, TAXON, COUNT)
 #'
 rarefy_long <- function(x, sites, taxon, counts, sample = NULL, verbose = TRUE) {
 
@@ -36,7 +43,7 @@ rarefy_long <- function(x, sites, taxon, counts, sample = NULL, verbose = TRUE) 
     sample <- min(sites_counts$n)
   }
 
-  sel_sites <- dplyr::filter(sites_counts, n >= sample)
+  sel_sites <- sites_counts[sites_counts$n >= sample, ]
   sel_sites <- tibble::deframe(dplyr::select(sel_sites, !!quo_sites))
 
   sites_rm <- nrow(sites_counts) - length(unique(sel_sites))
