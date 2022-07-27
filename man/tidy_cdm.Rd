@@ -4,8 +4,7 @@
 \alias{tidy_cdm}
 \title{Community data matrix to tibble}
 \usage{
-tidy_cdm(x, row.name = "SITE", key.name = "TAXON",
-  value.name = "COUNT")
+tidy_cdm(x, row.name = "SITE", key.name = "TAXON", value.name = "COUNT")
 }
 \arguments{
 \item{x}{a community matrix or dataframe.}

@@ -4,8 +4,14 @@
 \alias{spread_cdm}
 \title{Long format to community data matrix}
 \usage{
-spread_cdm(x, row.names, col.names, counts, keep.order = FALSE,
-  fill.missing = NA)
+spread_cdm(
+  x,
+  row.names,
+  col.names,
+  counts,
+  keep.order = FALSE,
+  fill.missing = NA
+)
 }
 \arguments{
 \item{x}{a tibble.}

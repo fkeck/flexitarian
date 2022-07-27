@@ -3,8 +3,7 @@
 \docType{package}
 \name{flexitarian}
 \alias{flexitarian}
-\alias{flexitarian-package}
 \title{flexitarian}
 \description{
-flexitarian
+Community Data Matrix to Tidy Data and Vice Versa
 }
