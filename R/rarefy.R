@@ -56,6 +56,7 @@ rarefy_long <- function(x, sites, taxon, counts, sample = NULL, verbose = TRUE) 
   res <- spread_cdm(x, !!quo_sites, !!quo_taxon, !!quo_counts, fill.missing = 0L)
   res <- res[sel_sites, ]
   res <- vegan::rrarefy(res, sample)
+  res <- flexitarian::remove_zerosum_cols(res, verbose = FALSE)
   res <- tidy_cdm(res,
                   row.name = dplyr::as_label(quo_sites),
                   key.name = dplyr::as_label(quo_taxon),
