@@ -41,12 +41,16 @@ rarefy_long <- function(x, sites, taxon, counts, sample = NULL, verbose = TRUE) 
 
   if(is.null(sample)) {
     sample <- min(sites_counts$n)
+    if(verbose) {
+      message("No subsample size provided: rarefaction to the size of the smallest community.")
+    }
   }
 
   sel_sites <- sites_counts[sites_counts$n >= sample, ]
   sel_sites <- tibble::deframe(dplyr::select(sel_sites, !!quo_sites))
 
   sites_rm <- nrow(sites_counts) - length(unique(sel_sites))
+
 
   if(verbose) {
     message("Performing rarefaction at ", sample, " individuals.\n",
